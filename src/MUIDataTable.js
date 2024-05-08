@@ -1562,6 +1562,35 @@ class MUIDataTable extends React.Component {
     );
   };
 
+  selectRowCustom = () => {
+    const { selectedRows, data, filterList } = this.state;
+
+    const selectedMap = buildMap(selectedRows.data);
+    const selectedRowData = data.filter(({ index }) => selectedMap[index]);
+    
+    if (this.options.onRowsCustom) {
+      const newRows = this.options.onRowsCustom(selectedRowData)
+      if (newRows === false) {
+        return;
+      } else {
+        this.setTableData(
+          {
+            columns: this.props.columns,
+            data: newRows,
+            options: {
+              filterList: filterList,
+            },
+          },
+          TABLE_LOAD.UPDATE,
+          true,
+          () => {
+            this.setTableAction('rowCustom');
+          },
+        );
+      }
+    }   
+  };
+
   toggleExpandRow = row => {
     const { dataIndex } = row;
     const { isRowExpandable } = this.options;
@@ -1938,6 +1967,7 @@ class MUIDataTable extends React.Component {
             options={this.options}
             selectedRows={selectedRows}
             onRowsDelete={this.selectRowDelete}
+            onRowsCustom={this.selectRowCustom}
             displayData={displayData}
             selectRowUpdate={this.selectRowUpdate}
             components={this.props.components}
