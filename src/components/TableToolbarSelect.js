@@ -81,17 +81,19 @@ class TableToolbarSelect extends React.Component {
         {options.customToolbarSelect ? (
           options.customToolbarSelect(selectedRows, displayData, this.handleCustomSelectedRows)
         ) : (
-          <Tooltip title={textLabels.delete}>
-            <IconButton className={classes.iconButton} onClick={onRowsDelete} aria-label={textLabels.deleteAria}>
-              <DeleteIcon className={classes.deleteIcon} />
-            </IconButton>
-          </Tooltip>
-         
-          <Tooltip title="Custom">
-            <IconButton className={classes.iconButton} onClick={onRowsCustom} aria-label={textLabels.customAria}>
-              <RefreshIcon className={classes.deleteIcon} />
-            </IconButton>
-          </Tooltip>
+          <div style={{ display: 'flex' }}>
+            <Tooltip title={textLabels.delete}>
+              <IconButton className={classes.iconButton} onClick={onRowsDelete} aria-label={textLabels.deleteAria}>
+                <DeleteIcon className={classes.deleteIcon} />
+              </IconButton>
+            </Tooltip>
+           
+            <Tooltip title="Custom">
+              <IconButton className={classes.iconButton} onClick={onRowsCustom} aria-label={textLabels.customAria}>
+                <RefreshIcon className={classes.deleteIcon} />
+              </IconButton>
+            </Tooltip>
+          </div>
         )}
       </Paper>
     );
