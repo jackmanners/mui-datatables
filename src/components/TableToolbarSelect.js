@@ -30,7 +30,7 @@ const defaultToolbarSelectStyles = theme => ({
     marginRight: '24px',
   },
   deleteIcon: {},
-  refreshIcon: {},
+  customIcon: {},
 });
 
 class TableToolbarSelect extends React.Component {
@@ -42,7 +42,7 @@ class TableToolbarSelect extends React.Component {
     /** Callback to trigger selected rows delete */
     onRowsDelete: PropTypes.func,
     /** Callback to trigger selected rows custom function */
-    onRowsRefresh: PropTypes.func,
+    onRowsCustom: PropTypes.func,
     /** Extend the style applied to components */
     classes: PropTypes.object,
   };
@@ -67,7 +67,7 @@ class TableToolbarSelect extends React.Component {
   };
 
   render() {
-    const { classes, onRowsDelete, onRowsRefresh, selectedRows, options, displayData, components = {} } = this.props;
+    const { classes, onRowsDelete, onRowsCustom, selectedRows, options, displayData, components = {} } = this.props;
     const textLabels = options.textLabels.selectedRows;
     const Tooltip = components.Tooltip || MuiTooltip;
 
@@ -87,9 +87,9 @@ class TableToolbarSelect extends React.Component {
             </IconButton>
           </Tooltip>
          
-          <Tooltip title="Refresh">
-            <IconButton className={classes.iconButton} onClick={onRowsRefresh} aria-label={textLabels.refreshAria}>
-              <RefreshIcon className={classes.refreshIcon} />
+          <Tooltip title="Custom">
+            <IconButton className={classes.iconButton} onClick={onRowsCustom} aria-label={textLabels.customAria}>
+              <RefreshIcon className={classes.deleteIcon} />
             </IconButton>
           </Tooltip>
         )}
