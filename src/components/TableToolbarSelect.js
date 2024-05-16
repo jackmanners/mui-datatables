@@ -42,7 +42,7 @@ class TableToolbarSelect extends React.Component {
     /** Callback to trigger selected rows delete */
     onRowsDelete: PropTypes.func,
     /** Callback to trigger selected rows custom function */
-    onRowsCustom: PropTypes.func,
+    onRowsCustom: PropTypes.arrayOf(PropTypes.func),
     /** Extend the style applied to components */
     classes: PropTypes.object,
   };
@@ -66,6 +66,11 @@ class TableToolbarSelect extends React.Component {
     this.props.selectRowUpdate('custom', selectedRows);
   };
 
+  // Function to handle custom actions
+  const handleCustomActions = (action) => {
+    action(selectedRows.data);
+  };
+
   render() {
     const { classes, onRowsDelete, onRowsCustom, selectedRows, options, displayData, components = {} } = this.props;
     const textLabels = options.textLabels.selectedRows;
@@ -87,12 +92,13 @@ class TableToolbarSelect extends React.Component {
                 <DeleteIcon className={classes.deleteIcon} />
               </IconButton>
             </Tooltip>
-           
-            <Tooltip title="Custom">
-              <IconButton className={classes.iconButton} onClick={onRowsCustom} aria-label={textLabels.customAria}>
-                <RefreshIcon className={classes.deleteIcon} />
-              </IconButton>
-            </Tooltip>
+           {onRowsCustom && onRowsCustom.map((customAction, index) => (
+              <Tooltip key={index} title={`Custom Action ${index + 1}`}>
+                <IconButton className={classes.iconButton} onClick={() => handleCustomActions(customAction)} aria-label={`Custom Action ${index + 1}`}>
+                  {customAction.icon}
+                </IconButton>
+              </Tooltip>
+            ))}
           </div>
         )}
       </Paper>
